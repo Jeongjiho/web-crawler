@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="LOG_HOME" value="/home/logs/home" />
+
+       <!-- SQL 로그 -->
+	  <appender name="SQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/SQL.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/SQL_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1000MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <!-- <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern> -->
+            <pattern>#%X{SQLResult}#%6X{SQLElapseTime}#%X{SQLStartTime}#%thread#%-10X{UserID} #%15X{ClientIP}#%X{SQLClassName}#%X{SQLName}%n%X{SQLQuery}%n%X{SQLParam}%n%X{SQLReturn}%n</pattern>
+        </encoder>
+    </appender>
+
+
+      <!-- API 로그 -->
+	  <appender name="API" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/API.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/API_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>#%X{APIResult}#%6X{APIElapseTime}#%X{APIStartTime}#%thread#%-10X{UserID} #%15X{ClientIP}#%X{APIClassName}#%X{APIName}%n%X{APIParam}%n%X{APIReturn}%n</pattern>
+        </encoder>
+    </appender>
+
+
+
+	 <!--  Web 로그 -->
+	 <appender name="WEB" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/WEB.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/WEB_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>#%X{WEBResult}#%6X{WEBElapseTime}#%X{WEBStartTime}#%thread#%-10X{UserID} #%15X{ClientIP}#%X{WEBClassName}#%X{WEBName}%n%X{WEBParam}%n%X{WEBReturn}%n</pattern>
+        </encoder>
+    </appender>
+
+
+	  <!--  Error 로그 -->
+	 <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/ERROR.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/ERROR_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>#%X{APIResult}#%6X{APIElapseTime}#%X{APIStartTime} #%thread#%-10X{UserID} #%15X{ClientIP}#%X{APIClassName}#%X{APIName}%n%X{APIParam}%n%X{APIReturn}%n%X{ErrorMsg}%n</pattern>
+        </encoder>
+    </appender>
+
+
+     <!--  API-STDOUT  -->
+    <appender name="API-STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>#%X{APIResult}#%6X{APIElapseTime}#%X{APIStartTime}#%thread#%-10X{UserID} #%15X{ClientIP}#%X{APIClassName}#%X{APIName}%n%X{APIParam}%n%X{APIReturn}%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!--  SQL-STDOUT  -->
+    <appender name="SQL-STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>#%X{SQLResult}#%6X{SQLElapseTime}#%X{SQLStartTime}#%thread#%-10X{UserID} #%15X{ClientIP}#%X{SQLClassName}#%X{SQLName}%n%X{SQLQuery}%n%X{SQLParam}%n%X{SQLReturn}%n</pattern>
+        </encoder>
+    </appender>
+
+
+	<!--  WEB-STDOUT  -->
+    <appender name="WEB-STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>#%X{WEBResult}#%6X{WEBElapseTime}#%X{WEBStartTime}#%thread#%-10X{UserID} #%15X{ClientIP}#%X{WEBClassName}#%X{WEBName}%n%X{WEBParam}%n%X{WEBReturn}%n</pattern>
+        </encoder>
+    </appender>
+
+
+	 <!-- Sql 맵핑된 데이터를 바로 보여주기 위해서. -->
+	<logger name="jdbc.sqltiming" level="ALL" >
+		<appender-ref ref="SQL" />
+		<appender-ref ref="SQL-STDOUT" />
+	</logger>
+
+    <!--  Spring -->
+    <logger name="org.springframework" level="ERROR"></logger>
+
+    <!-- API -->
+    <logger name="API" level="DEBUG" additivity="false">
+        <appender-ref ref="API" />
+        <appender-ref ref="API-STDOUT" />
+    </logger>
+
+    <!--  SQL -->
+    <logger name="SQL" level="ALL">
+        <appender-ref ref="SQL" />
+        <appender-ref ref="SQL-STDOUT" />
+    </logger>
+
+
+    <!--  WEB -->
+    <logger name="WEB" level="DEBUG" additivity="false">
+        <appender-ref ref="WEB" />
+        <appender-ref ref="WEB-STDOUT" />
+    </logger>
+
+
+    <!--  ERROR -->
+    <logger name="ERROR" level="ERROR" additivity="false">
+        <appender-ref ref="ERROR" />
+    </logger>
+
+</configuration>
