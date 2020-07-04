@@ -23,7 +23,7 @@ var webCrawler = {
 			return false;
 		}
 		
-		if( !CONSTRACT.REG_EXP.URL.test($("#requestUrl").val()) ) {
+		if( !CONSTRACT.REG_EXP.URL.test($("#requestUrl").val().toLowerCase()) ) {
 			alert("URL형식을 입력해주세요.");
 			$("#requestUrl").focus();
 			return false;
