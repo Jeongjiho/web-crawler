@@ -20,6 +20,15 @@ public class WebCrawlerUtils {
 	
 	private WebCrawlerUtils() {}
 	
+	/**
+	 * 
+	 * @param requestUrl String
+	 * @return correctEncodedURL String
+	 * @throws MalformedURLException
+	 * @throws URISyntaxException
+	 * @author JeongJiHo
+	 * @since 2020-07-03
+	 */
 	public static String getPunycodeEncoding( String requestUrl ) throws MalformedURLException, URISyntaxException {
 		
 		if( StringUtils.isEmpty( requestUrl ) ) {

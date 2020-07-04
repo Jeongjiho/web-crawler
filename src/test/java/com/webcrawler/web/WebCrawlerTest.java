@@ -23,7 +23,9 @@ public class WebCrawlerTest extends CommaBaseModelTest {
 		
 		
 		//http://xn--ob0b570cnxa.xn--3e0b707e/
-		String requestUrl = "http://공정위.한국/";
+		//String requestUrl = "http://공정위.한국/";
+		//https://www.baidu.com/s?cl=3&tn=baidutop10&fr=top1000&wd=曝川师大副院长对女教师强摸吻啃&rsv_idx=2&rsv_dl=fyb_n_homepage&hisfilter=1
+		String requestUrl = "https://www.baidu.com/s?cl=3&tn=baidutop10&fr=top1000&wd=曝川师大副院长对女教师强摸吻啃&rsv_idx=2&rsv_dl=fyb_n_homepage&hisfilter=1";
 		
 		URL url= new URL(requestUrl);
 		URI uri = new URI(url.getProtocol(), url.getUserInfo(), IDN.toASCII(url.getHost()), url.getPort(), url.getPath(), url.getQuery(), url.getRef());

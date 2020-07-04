@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
@@ -72,6 +73,17 @@ public class WebConfig extends WebMvcConfigurationSupport {
 	protected void addResourceHandlers( ResourceHandlerRegistry registry ) {
 		registry.addResourceHandler( "/resources/**" ).addResourceLocations( "/resources/" );
 		registry.setOrder(0).addResourceHandler( "/robots.txt" ).addResourceLocations( "/" );
+	}
+	
+	/** 
+
+	 * Add Index Page
+
+	 */
+
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("redirect:/web-crawler");
 	}
 	
 }

@@ -3,11 +3,9 @@ package com.webcrawler.web;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -56,8 +54,9 @@ public class WebCrawlerController extends BaseController {
 			htmlStr = WebCrawlerUtils.getCrawlingHtmlString(correctEncodedURL);
 		} catch (IOException e) {
 			e.printStackTrace();
-			logger.error( e.getMessage() );
-			return returnResultMap(CommonConstract.COMMON_RESULT_CODE_ERROR);
+			System.out.println( e.getMessage() );
+			logger.error( "[" + CommonConstract.COMMON_RESULT_CODE_NOT_CONNECT.getKey() + "] ::: " + e.getMessage() );
+			return returnResultMap(CommonConstract.COMMON_RESULT_CODE_NOT_CONNECT);
 		}
 		
 		if( StringUtils.isEmpty( htmlStr ) ) {
@@ -134,11 +133,6 @@ public class WebCrawlerController extends BaseController {
 		
 		return returnResultMap(CommonConstract.COMMON_RESULT_CODE_SUCCESS, dataMap);
 		
-	}
-	
-	@RequestMapping( value = "/", method = RequestMethod.GET )
-	public String index() {
-		return "redirect:/web-crawler";
 	}
 	
 }

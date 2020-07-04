@@ -23,11 +23,11 @@ var webCrawler = {
 			return false;
 		}
 		
-		/*if( !CONSTRACT.REG_EXP.URL.test($("#requestUrl").val()) ) {
+		if( !CONSTRACT.REG_EXP.URL.test($("#requestUrl").val()) ) {
 			alert("URL형식을 입력해주세요.");
 			$("#requestUrl").focus();
 			return false;
-		}*/
+		}
 		
 		if( !$("#type").val() ) {
 			alert("타입을 선택해주세요.");

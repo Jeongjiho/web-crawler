@@ -10,6 +10,7 @@ public enum CommonConstract implements Constract{
 
 	COMMON_RESULT_CODE_SUCCESS( "SUCCESS", "성공적으로 작업을 수행하였습니다." ),
 	COMMON_RESULT_CODE_ERROR( "ERROR", "작업 중 에러가 발생했습니다." ),
+	COMMON_RESULT_CODE_NOT_CONNECT( "NOT_CONNECT", "해당 URL로 접속할 수 없습니다." ),
 	COMMON_RESULT_CODE_EMPTY( "EMPTY", "데이터가 없습니다." )
 	;
 	
