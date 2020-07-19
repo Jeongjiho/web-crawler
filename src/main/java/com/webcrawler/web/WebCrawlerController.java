@@ -1,9 +1,14 @@
 package com.webcrawler.web;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -32,7 +37,7 @@ public class WebCrawlerController extends BaseController {
 	}
 	
 	@RequestMapping( value = "/web-crawler.json", method = RequestMethod.GET )
-	public @ResponseBody Map<String, Object> webCrawler( @RequestParam( value = "requestUrl", required = true ) String requestUrl, @RequestParam( value = "type", required = true ) String type, @RequestParam( value = "printUnit", required = true ) Integer printUnit ) {
+	public @ResponseBody Map<String, Object> webCrawler( @RequestParam( value = "requestUrl", required = true ) String requestUrl, @RequestParam( value = "type", required = true ) String type, @RequestParam( value = "printUnit", required = true ) Integer printUnit ) throws IOException, ClassNotFoundException {
 
 		String correctEncodedURL = "";
 		
@@ -131,7 +136,75 @@ public class WebCrawlerController extends BaseController {
 		dataMap.put("quotientList", quotientList);
 		dataMap.put("remainder", resultStr);
 		
-		return returnResultMap(CommonConstract.COMMON_RESULT_CODE_SUCCESS, dataMap);
+		WebVO vo = new WebVO();	
+		
+		vo.setName("이름");
+		vo.setPwd("1234");
+		
+		System.out.println( vo );
+		
+		 byte[] serializedVO;
+		    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+		        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+		            oos.writeObject(vo);
+		            // serializedMember -> 직렬화된 member 객체
+		            serializedVO = baos.toByteArray();
+		        }
+		    }
+		
+		String seri = Base64.getEncoder().encodeToString(serializedVO);
+		
+		System.out.println( seri );
+		
+		WebVO vo2 = null;
+	    byte[] serializedMember = Base64.getDecoder().decode(seri);
+	    try (ByteArrayInputStream bais = new ByteArrayInputStream(serializedMember)) {
+	        try (ObjectInputStream ois = new ObjectInputStream(bais)) {
+	            // 역직렬화된 Member 객체를 읽어온다.
+	            Object objectMember = ois.readObject();
+	            vo2 = (WebVO) objectMember;
+	            System.out.println(vo2);
+	        }
+	    }
+		
+		
+		return returnResultMap(CommonConstract.COMMON_RESULT_CODE_SUCCESS, vo2);
+		
+	}
+	
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
+		
+		WebVO vo = new WebVO();
+		
+		vo.setName("이름");
+		vo.setPwd("1234");
+		
+		System.out.println( vo );
+		
+		 byte[] serializedVO;
+		    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+		        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+		            oos.writeObject(vo);
+		            // serializedMember -> 직렬화된 member 객체
+		            serializedVO = baos.toByteArray();
+		        }
+		    }
+		
+		String seri = Base64.getEncoder().encodeToString(serializedVO);
+		
+		System.out.println( seri );
+		
+	    byte[] serializedMember = Base64.getDecoder().decode(seri);
+	    try (ByteArrayInputStream bais = new ByteArrayInputStream(serializedMember)) {
+	        try (ObjectInputStream ois = new ObjectInputStream(bais)) {
+	            // 역직렬화된 Member 객체를 읽어온다.
+	            Object objectMember = ois.readObject();
+	            WebVO vo2 = (WebVO) objectMember;
+	            System.out.println(vo2);
+	        }
+	    }
+		
+		
 		
 	}
 	
